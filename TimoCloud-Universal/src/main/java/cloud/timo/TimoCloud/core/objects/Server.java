@@ -311,9 +311,8 @@ public class Server implements Instance, Communicatable {
                             return false;
                         }
                         JsonObject latestBuilds = PaperAPI.getLatestBuilds(project, s1);
-                        int latestBuild = latestBuilds.get("build").getAsInt();
-                        String fileName = latestBuilds.getAsJsonObject("downloads").getAsJsonObject("application").get("name").getAsString();
-                        String downloadURL = PaperAPI.buildDownloadURL(project, s1, latestBuild, fileName);
+                        String fileName = PaperAPI.getFileName(latestBuilds);
+                        String downloadURL = PaperAPI.buildDownloadURL(latestBuilds);
                         TimoCloudCore.getInstance().info("Downloading " + fileName + "...", true);
                         if (!isStatic()) {
                             File templateDirectory = new File(TimoCloudCore.getInstance().getFileManager().getServerTemplatesDirectory(), getGroup().getName());
